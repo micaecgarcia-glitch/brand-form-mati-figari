@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mati Figari — Formulario de Identidad de Marca</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #faf7f2;
+    --light: #f5f1eb;
+    --border: #e8e3db;
+    --text-primary: #3e3530;
+    --text-secondary: #6b6560;
+    --accent: #8b7355;
+    --accent-dark: #6b5b4e;
+    --accent-light: #d4a574;
+  }
+
+  body {
+    font-family: 'Roboto', sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    min-height: 100vh;
+    padding: 0 0 60px;
+  }
+
+  header {
+    background: var(--accent-dark);
+    color: #fff;
+    padding: 36px 24px 28px;
+    text-align: center;
+  }
+
+  header h1 {
+    font-size: 1.7rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    margin-bottom: 6px;
+  }
+
+  header p {
+    font-size: 0.95rem;
+    opacity: 0.8;
+    font-weight: 400;
+  }
+
+  .intro {
+    max-width: 680px;
+    margin: 32px auto 8px;
+    padding: 24px 28px;
+    background: var(--light);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 0.97rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+  }
+
+  .form-container {
+    max-width: 680px;
+    margin: 24px auto;
+    padding: 0 16px;
+  }
+
+  /* Respondent info */
+  .respondent-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+  }
+
+  .respondent-card h2 {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--accent);
+    margin-bottom: 18px;
+  }
+
+  .field-row {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .field-group {
+    flex: 1;
+    min-width: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+
+  label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+  }
+
+  input[type="text"],
+  input[type="email"],
+  select,
+  textarea {
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 10px 14px;
+    width: 100%;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--accent);
+  }
+
+  textarea {
+    min-height: 100px;
+    resize: vertical;
+    line-height: 1.6;
+  }
+
+  /* Accordion sections */
+  .section {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 14px;
+    overflow: hidden;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 24px;
+    cursor: pointer;
+    user-select: none;
+    background: var(--light);
+    transition: background 0.2s;
+  }
+
+  .section-header:hover { background: var(--border); }
+
+  .section-title {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-chevron {
+    font-size: 0.85rem;
+    color: var(--accent);
+    transition: transform 0.25s;
+  }
+
+  .section-body {
+    padding: 0 24px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.25s;
+  }
+
+  .section-body.open {
+    max-height: 4000px;
+    padding: 20px 24px 28px;
+  }
+
+  .section-chevron.open { transform: rotate(180deg); }
+
+  /* Questions */
+  .question-block {
+    margin-bottom: 22px;
+  }
+
+  .question-label {
+    font-size: 0.93rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+
+  .question-label .badge {
+    display: inline-block;
+    background: var(--accent-light);
+    color: var(--accent-dark);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  .audio-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+
+  .btn-audio {
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    padding: 7px 14px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    background: var(--light);
+    color: var(--text-secondary);
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .btn-audio:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .btn-audio.recording { background: #c0392b; color: #fff; border-color: #c0392b; }
+
+  .audio-status {
+    font-size: 0.78rem;
+    color: var(--accent);
+    margin-top: 5px;
+    min-height: 16px;
+  }
+
+  /* Submit */
+  .submit-wrap {
+    text-align: center;
+    margin-top: 32px;
+  }
+
+  .btn-submit {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    background: var(--accent-dark);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 14px 44px;
+    cursor: pointer;
+    transition: background 0.2s;
+    letter-spacing: 0.01em;
+  }
+
+  .btn-submit:hover { background: var(--accent); }
+
+  /* Success page */
+  #success-page {
+    display: none;
+    max-width: 540px;
+    margin: 80px auto;
+    text-align: center;
+    padding: 48px 32px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+  }
+
+  #success-page h2 { font-size: 1.5rem; color: var(--accent-dark); margin-bottom: 12px; }
+  #success-page p { color: var(--text-secondary); line-height: 1.7; margin-bottom: 10px; }
+  #success-page a { color: var(--accent); text-decoration: none; }
+
+  @media (max-width: 600px) {
+    header h1 { font-size: 1.3rem; }
+    .intro, .form-container { padding: 16px; }
+    .section-body.open { padding: 16px 16px 24px; }
+    .section-header { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🪂 Mati Figari</h1>
+  <p>Formulario de Identidad de Marca · Influencer Deportes Extremos</p>
+</header>
+
+<div id="form-page">
+  <div class="intro">
+    ¡Hola, Mati y Tomi! Este formulario es el punto de partida del proyecto. Las respuestas que den acá son el insumo principal para construir la identidad de Mati Figari como marca — quién es, a quién le habla y cómo. Pueden responder escribiendo o grabando su voz. No hay respuestas correctas ni incorrectas: lo que importa es que sea honesto. 🧘‍♀️ Estoy a disposición para acompañarlos en el proceso o por cualquier consulta que surja. ¡Gracias por compartir!
+  </div>
+
+  <div class="form-container">
+    <form id="brand-form" action="https://formspree.io/f/mykojrzz" method="POST">
+
+      <!-- Respondent info -->
+      <div class="respondent-card">
+        <h2>👤 ¿Quién responde este formulario?</h2>
+        <div class="field-row">
+          <div class="field-group">
+            <label for="respondent_name">Nombre *</label>
+            <input type="text" id="respondent_name" name="respondent_name" required placeholder="Tu nombre">
+          </div>
+          <div class="field-group">
+            <label for="respondent_email">Email *</label>
+            <input type="email" id="respondent_email" name="respondent_email" required placeholder="tu@email.com">
+          </div>
+        </div>
+        <div class="field-group" style="max-width:320px">
+          <label for="respondent_role">Rol</label>
+          <select id="respondent_role" name="respondent_role">
+            <option value="">Seleccioná tu rol</option>
+            <option>Creador de contenido</option>
+            <option>Editor / Plataformas</option>
+            <option>Co-fundador</option>
+            <option>Community Manager</option>
+            <option>Marketing</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <input type="hidden" name="timestamp" id="timestamp">
+        <input type="hidden" name="brand" value="Mati Figari">
+      </div>
+
+      <!-- S1: Misión -->
+      <div class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+          <span class="section-title">🎯 Misión</span>
+          <span class="section-chevron open">▼</span>
+        </div>
+        <div class="section-body open">
+          <div class="question-block">
+            <div class="question-label">¿Cuál es el propósito fundamental de Mati Figari?</div>
+            <textarea name="mision_proposito" placeholder="¿Para qué existe esta marca? ¿Qué quiere dejar en quien la sigue?"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'mision_proposito')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+          <div class="question-block">
+            <div class="question-label">¿Qué problemas o necesidades resuelven para su audiencia?</div>
+            <textarea name="mision_necesidades" placeholder="¿Qué le falta a tu audiencia que vos le dás?"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'mision_necesidades')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S2: Público Objetivo -->
+      <div class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+          <span class="section-title">🫂 Público Objetivo</span>
+          <span class="section-chevron">▼</span>
+        </div>
+        <div class="section-body">
+          <div class="question-block">
+            <div class="question-label">¿Quién es tu seguidor ideal? Describí edad, perfil, dónde vive</div>
+            <textarea name="publico_perfil" placeholder="Pensá en la persona que más te representa como audiencia y describila"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'publico_perfil')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+          <div class="question-block">
+            <div class="question-label">¿Cuál es el estilo de vida o los valores de tu seguidor ideal?</div>
+            <textarea name="publico_valores" placeholder="¿Qué hace en su tiempo libre? ¿Qué le importa? ¿Cómo ve el mundo?"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'publico_valores')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+          <div class="question-block">
+            <div class="question-label">¿Tenés ejemplos concretos de seguidores que mejor representan tu audiencia ideal?</div>
+            <textarea name="publico_ejemplos" placeholder="Comentarios, mensajes, personas reales que te escribieron o que te siguen"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'publico_ejemplos')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+          <div class="question-block">
+            <div class="question-label">¿Por qué algunos seguidores llegan pero no se quedan?</div>
+            <textarea name="publico_noconvierten" placeholder="¿Qué ves que pasa cuando alguien te sigue pero deja de interactuar o te deja de seguir?"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'publico_noconvierten')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+          <div class="question-block">
+            <div class="question-label">¿En qué momento de su vida te descubre alguien por primera vez?</div>
+            <textarea name="publico_contexto" placeholder="¿Qué estaba buscando cuando te encontró? ¿Qué situación está viviendo?"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'publico_contexto')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S3: Propuesta de Valor -->
+      <div class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+          <span class="section-title">🤩 Propuesta de Valor</span>
+          <span class="section-chevron">▼</span>
+        </div>
+        <div class="section-body">
+          <div class="question-block">
+            <div class="question-label">¿Cuál es tu propuesta única de valor? ¿Por qué seguir a Mati Figari?</div>
+            <textarea name="valor_unico" placeholder="¿Qué te diferencia de otros creadores de deportes extremos?"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'valor_unico')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+          <div class="question-block">
+            <div class="question-label">¿Qué le das a tu audiencia que no pueden encontrar en otro creador?</div>
+            <textarea name="valor_exclusivo" placeholder="¿Qué tiene tu contenido que no tiene el de otros en el mismo espacio?"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'valor_exclusivo')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+          <div class="question-block">
+            <div class="question-label">¿Qué sienten o dicen los seguidores que más te impacta emocionalmente?</div>
+            <textarea name="valor_impacto" placeholder="Mensajes, comentarios, momentos que te hicieron sentir que esto vale la pena"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'valor_impacto')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+          <div class="question-block">
+            <div class="question-label">¿Qué frenos o dudas aparecen en alguien que está a punto de seguirte o interactuar con tu contenido?</div>
+            <textarea name="valor_objeciones" placeholder="¿Por qué alguien que ve tu contenido no hace clic, no comenta, no comparte?"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'valor_objeciones')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+          <div class="question-block">
+            <div class="question-label">Mencioná MÍNIMO 3 creadores, marcas o perfiles que admirás <span class="badge">IMPORTANTE</span></div>
+            <textarea name="valor_referencias" placeholder="¿Qué hacen bien? ¿Qué comunicán? ¿Qué les copiarías y qué harías diferente?"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'valor_referencias')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+          <div class="question-block">
+            <div class="question-label">¿Qué hace que un video de Mati "funcione"? ¿Qué tienen en común los que más impacto generaron? <span class="badge">PERSONALIZADA</span></div>
+            <textarea name="valor_videos" placeholder="Pensá en tus videos más vistos, comentados o compartidos. ¿Qué tenían en común?"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'valor_videos')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S4: Personalidad de Marca -->
+      <div class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+          <span class="section-title">🌟 Personalidad de Marca</span>
+          <span class="section-chevron">▼</span>
+        </div>
+        <div class="section-body">
+          <div class="question-block">
+            <div class="question-label">¿Cómo describirías el tono y la voz de Mati Figari?</div>
+            <textarea name="personalidad_tono" placeholder="¿Cómo habla Mati en cámara y en captions? ¿Qué palabras lo definen?"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'personalidad_tono')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+          <div class="question-block">
+            <div class="question-label">¿Qué emociones querés que sienta alguien después de ver un video de Mati?</div>
+            <textarea name="personalidad_emociones" placeholder="¿Qué tiene que sentir? ¿Qué tiene que pensar? ¿Qué tiene que hacer?"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'personalidad_emociones')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S5: Valores de Marca -->
+      <div class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+          <span class="section-title">⭐ Valores de Marca</span>
+          <span class="section-chevron">▼</span>
+        </div>
+        <div class="section-body">
+          <div class="question-block">
+            <div class="question-label">¿Cuáles son los 3 a 5 valores principales de Mati Figari como marca?</div>
+            <textarea name="valores_lista" placeholder="Libertad, autenticidad, adrenalina, comunidad... los que más te representan"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'valores_lista')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+          <div class="question-block">
+            <div class="question-label">¿Cómo se ven esos valores en la forma en que Mati se relaciona con su audiencia?</div>
+            <textarea name="valores_aplicacion" placeholder="¿Cómo se vive en el día a día del contenido, en los comentarios, en las historias?"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'valores_aplicacion')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S6: Historia de la Marca -->
+      <div class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+          <span class="section-title">📜 Historia de la Marca</span>
+          <span class="section-chevron">▼</span>
+        </div>
+        <div class="section-body">
+          <div class="question-block">
+            <div class="question-label">¿Cómo nació Mati Figari como creador de contenido? Contá la historia desde el inicio</div>
+            <textarea name="historia_inicio" placeholder="¿Cuándo empezaste? ¿Por qué? ¿Qué fue lo primero que publicaste?"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'historia_inicio')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+          <div class="question-block">
+            <div class="question-label">¿Cuál ha sido la evolución de Mati Figari hasta hoy?</div>
+            <textarea name="historia_evolucion" placeholder="¿Cómo cambió el contenido, la audiencia, los objetivos desde que empezaste?"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'historia_evolucion')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S7: Identidad Visual -->
+      <div class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+          <span class="section-title">😎 Identidad Visual</span>
+          <span class="section-chevron">▼</span>
+        </div>
+        <div class="section-body">
+          <div class="question-block">
+            <div class="question-label">¿Qué colores, tipografía y elementos visuales representan hoy a Mati Figari?</div>
+            <textarea name="visual_actual" placeholder="¿Hay algo que se repita? ¿Algo que te guste y algo que ya no te convenza?"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'visual_actual')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+          <div class="question-block">
+            <div class="question-label">¿Por qué el pato? ¿Cómo se definió y cómo se creó ese logo? <span class="badge">PERSONALIZADA</span></div>
+            <textarea name="visual_pato" placeholder="¿De dónde salió la idea? ¿Quién lo diseñó? ¿Qué significado tiene para vos?"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'visual_pato')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S8: Comunicación -->
+      <div class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+          <span class="section-title">🗣️ Comunicación</span>
+          <span class="section-chevron">▼</span>
+        </div>
+        <div class="section-body">
+          <div class="question-block">
+            <div class="question-label">¿Cuáles son los canales donde más interacción genuina tienen con la audiencia?</div>
+            <textarea name="com_canales" placeholder="¿Dónde te escriben más? ¿Dónde se generan las mejores conversaciones?"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'com_canales')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+          <div class="question-block">
+            <div class="question-label">¿Qué tipo de contenido o mensaje genera más reacción genuina en tu audiencia?</div>
+            <textarea name="com_mensajes" placeholder="¿Cuándo la gente comenta más, comparte más, te escribe por DM?"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'com_mensajes')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+          <div class="question-block">
+            <div class="question-label">¿Qué información sobre Mati Figari no está clara o no se ve en los canales públicos?</div>
+            <textarea name="com_faltante" placeholder="¿Qué te preguntan seguido que deberías tener respondido en el perfil?"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'com_faltante')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+          <div class="question-block">
+            <div class="question-label">¿Qué explicás en conversaciones privadas que debería estar publicado?</div>
+            <textarea name="com_privado" placeholder="Cosas que contás en DMs o en persona que la audiencia en general no sabe"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'com_privado')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S9: Canales y Conversión -->
+      <div class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+          <span class="section-title">📲 Canales y Conversión</span>
+          <span class="section-chevron">▼</span>
+        </div>
+        <div class="section-body">
+          <div class="question-block">
+            <div class="question-label">¿De dónde vienen hoy la mayoría de los seguidores nuevos?</div>
+            <textarea name="canales_origen" placeholder="¿Instagram, YouTube, TikTok, boca en boca, colaboraciones...?"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'canales_origen')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+          <div class="question-block">
+            <div class="question-label">¿Cuál es el canal donde la gente más "convierte"? ¿Dónde te escribe para saltar o para preguntar sobre proyectos?</div>
+            <textarea name="canales_conversion" placeholder="¿Por dónde llegan los mensajes de personas que quieren saltar o contactarte por algo concreto?"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'canales_conversion')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+          <div class="question-block">
+            <div class="question-label">¿Cómo manejás el proceso desde que alguien te escribe hasta que concreta algo?</div>
+            <textarea name="canales_proceso" placeholder="¿Qué pasa después del primer mensaje? ¿Hay un proceso o va caso a caso?"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'canales_proceso')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S10: Contenido -->
+      <div class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+          <span class="section-title">📸 Contenido</span>
+          <span class="section-chevron">▼</span>
+        </div>
+        <div class="section-body">
+          <div class="question-block">
+            <div class="question-label">¿Qué tipo de contenido es más fácil o natural de producir para Mati?</div>
+            <textarea name="contenido_facil" placeholder="¿Qué formatos fluyen más? ¿Dónde no tenés que pensar demasiado?"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'contenido_facil')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+          <div class="question-block">
+            <div class="question-label">¿Tienen material de proyectos pasados archivado y organizado?</div>
+            <textarea name="contenido_archivo" placeholder="¿Hay fotos, videos, grabaciones de eventos o viajes que no se usaron?"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'contenido_archivo')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+          <div class="question-block">
+            <div class="question-label">¿Qué parte de la experiencia de Mati todavía no se muestra y sería interesante documentar?</div>
+            <textarea name="contenido_potencial" placeholder="¿Qué pasa detrás de cámara que la gente no ve y que podría conectar con la audiencia?"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'contenido_potencial')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S11: Interacción con la Audiencia -->
+      <div class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+          <span class="section-title">💏 Interacción con la Audiencia</span>
+          <span class="section-chevron">▼</span>
+        </div>
+        <div class="section-body">
+          <div class="question-block">
+            <div class="question-label">¿Qué experiencia querés que tenga alguien desde la primera vez que te ve?</div>
+            <textarea name="interaccion_primera" placeholder="¿Qué tiene que pasar en ese primer contacto para que se quede?"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'interaccion_primera')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+          <div class="question-block">
+            <div class="question-label">¿Cómo se resuelven las dudas o miedos de alguien que quiere saltar pero no sabe por dónde empezar?</div>
+            <textarea name="interaccion_dudas" placeholder="¿Qué le decís a alguien que te escribe con miedo o con preguntas básicas?"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'interaccion_dudas')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+          <div class="question-block">
+            <div class="question-label">¿Cuál es el proceso completo desde que alguien te escribe hasta que concreta un salto?</div>
+            <textarea name="interaccion_proceso" placeholder="Paso a paso de cómo funciona hoy"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'interaccion_proceso')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+          <div class="question-block">
+            <div class="question-label">¿Cuánto tiempo pasa entre el primer mensaje y que alguien concreta algo?</div>
+            <textarea name="interaccion_tiempo" placeholder="¿Es rápido, lento? ¿Depende del caso?"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'interaccion_tiempo')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+          <div class="question-block">
+            <div class="question-label">¿En qué punto se "cae" alguien que parecía interesado?</div>
+            <textarea name="interaccion_caida" placeholder="¿Dónde se corta la conversación? ¿Qué pasa justo antes de que dejen de responder?"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'interaccion_caida')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S12: Proyectos y Modelo Comercial -->
+      <div class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+          <span class="section-title">💰 Proyectos y Modelo Comercial</span>
+          <span class="section-chevron">▼</span>
+        </div>
+        <div class="section-body">
+          <div class="question-block">
+            <div class="question-label">¿Cuáles son los 3 proyectos o líneas principales de Mati Figari hoy?</div>
+            <textarea name="comercial_proyectos" placeholder="Quiero Saltar, eventos, marcas... ¿cómo los describirías?"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'comercial_proyectos')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+          <div class="question-block">
+            <div class="question-label">¿Cuál de esos proyectos tiene más tracción o más potencial inmediato?</div>
+            <textarea name="comercial_prioridad" placeholder="¿En qué línea pondrías el foco si tuvieras que elegir una?"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'comercial_prioridad')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+          <div class="question-block">
+            <div class="question-label">¿Qué tipo de marcas imaginan como socios ideales para Mati? <span class="badge">PERSONALIZADA</span></div>
+            <textarea name="comercial_marcas" placeholder="¿Qué productos usa Mati en su día a día que encajarían naturalmente con su contenido?"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'comercial_marcas')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+          <div class="question-block">
+            <div class="question-label">¿Cuál es el factor más importante para que alguien decida saltar o participar en un proyecto de Mati?</div>
+            <textarea name="comercial_factor" placeholder="¿Qué inclina la balanza? ¿Qué hace que alguien diga sí?"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'comercial_factor')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S13: Visión a Largo Plazo -->
+      <div class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+          <span class="section-title">🔜 Visión a Largo Plazo</span>
+          <span class="section-chevron">▼</span>
+        </div>
+        <div class="section-body">
+          <div class="question-block">
+            <div class="question-label">¿Dónde ven a Mati Figari como marca en 2 o 3 años?</div>
+            <textarea name="vision_futuro" placeholder="¿Qué tiene que ser cierto en 3 años para que sientan que esto funcionó?"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'vision_futuro')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+          <div class="question-block">
+            <div class="question-label">¿Cómo describirían la comunidad que quieren construir — no la que tienen hoy, sino la que imaginan? <span class="badge">PERSONALIZADA</span></div>
+            <textarea name="vision_comunidad" placeholder="¿Quiénes son? ¿Cómo interactúan entre sí? ¿Qué los une más allá de seguir a Mati?"></textarea>
+            <div class="audio-row">
+              <button type="button" class="btn-audio" onclick="startRecording(this, 'vision_comunidad')">Grabar</button>
+              <button type="button" class="btn-audio" onclick="stopRecording(this)" style="display:none">⏹ Detener</button>
+            </div>
+            <div class="audio-status"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="submit-wrap">
+        <button type="submit" class="btn-submit">Enviar respuestas →</button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<!-- Success page -->
+<div id="success-page">
+  <div style="font-size:2.5rem;margin-bottom:16px">🎉</div>
+  <h2>¡Gracias por compartir!</h2>
+  <p>Recibimos toda la información de <strong>Mati Figari</strong>.</p>
+  <p>Próximos pasos: estamos en contacto para la primera entrega del brief de marca, con posibilidad de ajustes y recomendaciones.</p>
+  <p style="margin-top:20px">
+    📧 <a href="mailto:micaecgarcia@gmail.com">micaecgarcia@gmail.com</a><br>
+    💬 <a href="https://wa.me/5491130301901">+54 9 11 3030 1901</a>
+  </p>
+  <p style="margin-top:16px;font-size:0.85rem;color:var(--text-secondary)">Podés cerrar esta ventana cuando quieras 🚀</p>
+</div>
+
+<script>
+  // Set timestamp
+  document.getElementById('timestamp').value = new Date().toISOString();
+
+  // Accordion
+  function toggleSection(header) {
+    const body = header.nextElementSibling;
+    const chevron = header.querySelector('.section-chevron');
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    chevron.classList.toggle('open', !isOpen);
+  }
+
+  // Form submit → success page
+  const form = document.getElementById('brand-form');
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const data = new FormData(form);
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        document.getElementById('form-page').style.display = 'none';
+        document.getElementById('success-page').style.display = 'block';
+        window.scrollTo(0,0);
+      } else {
+        alert('Hubo un error al enviar. Por favor intentá de nuevo.');
+      }
+    } catch(err) {
+      alert('Hubo un error de conexión. Por favor intentá de nuevo.');
+    }
+  });
+
+  // Web Speech API
+  let recognition = null;
+  let currentField = null;
+  let currentStopBtn = null;
+
+  function startRecording(btn, fieldName) {
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+      alert('Tu navegador no soporta grabación de voz. Usá Chrome o Edge.');
+      return;
+    }
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    recognition = new SpeechRecognition();
+    recognition.lang = 'es-AR';
+    recognition.continuous = true;
+    recognition.interimResults = true;
+
+    currentField = document.querySelector('[name="' + fieldName + '"]');
+    const row = btn.closest('.audio-row');
+    const stopBtn = row.querySelector('[onclick*="stopRecording"]');
+    const status = btn.closest('.question-block').querySelector('.audio-status');
+    currentStopBtn = stopBtn;
+
+    btn.style.display = 'none';
+    stopBtn.style.display = 'inline-block';
+    stopBtn.classList.add('recording');
+    status.textContent = '● Grabando...';
+
+    let finalTranscript = currentField.value;
+
+    recognition.onresult = function(event) {
+      let interim = '';
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        if (event.results[i].isFinal) {
+          finalTranscript += event.results[i][0].transcript + ' ';
+        } else {
+          interim += event.results[i][0].transcript;
+        }
+      }
+      currentField.value = finalTranscript + interim;
+    };
+
+    recognition.onerror = function() {
+      status.textContent = 'Error al grabar. Intentá de nuevo.';
+      stopBtn.style.display = 'none';
+      btn.style.display = 'inline-block';
+      stopBtn.classList.remove('recording');
+    };
+
+    recognition.onend = function() {
+      status.textContent = '';
+      stopBtn.style.display = 'none';
+      btn.style.display = 'inline-block';
+      stopBtn.classList.remove('recording');
+    };
+
+    recognition.start();
+  }
+
+  function stopRecording(btn) {
+    if (recognition) recognition.stop();
+  }
+</script>
+</body>
+</html>
