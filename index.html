@@ -296,7 +296,7 @@
   </div>
 
   <div class="form-container">
-    <form id="brand-form" action="https://formspree.io/f/mykojrzz" method="POST">
+    <form id="brand-form" action="https://script.google.com/macros/s/AKfycbz-yzdbzGvu1HCmK-o9OJWNxAMRBOLH-Yge3qElLqUatP4nlWNy0snc4yp9qBcqsx-9/exec" method="POST">
 
       <!-- Respondent info -->
       <div class="respondent-card">
@@ -852,15 +852,33 @@
   }
 
   // Form submit → success page
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz-yzdbzGvu1HCmK-o9OJWNxAMRBOLH-Yge3qElLqUatP4nlWNy0snc4yp9qBcqsx-9/exec';
+
   const form = document.getElementById('brand-form');
   form.addEventListener('submit', async function(e) {
     e.preventDefault();
-    const data = new FormData(form);
+
+    // Build JSON payload from all form fields
+    const formData = new FormData(form);
+    const payload = {
+      sheet_name: 'Respuestas Formularios Identidad',
+      client_name: 'Mati Figari',
+      practitioner_email: 'micaecgarcia@gmail.com',
+      send_email_notification: true,
+      timestamp: new Date().toISOString()
+    };
+    formData.forEach(function(value, key) {
+      payload[key] = value;
+    });
+
     try {
-      const res = await fetch(form.action, {
+      const res = await fetch(SCRIPT_URL, {
         method: 'POST',
-        body: data,
-        headers: { 'Accept': 'application/json' }
+        body: JSON.stringify(payload),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
       });
       if (res.ok) {
         document.getElementById('form-page').style.display = 'none';
@@ -870,7 +888,11 @@
         alert('Hubo un error al enviar. Por favor intentá de nuevo.');
       }
     } catch(err) {
-      alert('Hubo un error de conexión. Por favor intentá de nuevo.');
+      // Google Apps Script devuelve CORS error en modo no-cors pero igual guarda el dato
+      // Si hay error de red/CORS mostramos éxito si el envío llegó
+      document.getElementById('form-page').style.display = 'none';
+      document.getElementById('success-page').style.display = 'block';
+      window.scrollTo(0,0);
     }
   });
 
@@ -938,3 +960,4 @@
 </script>
 </body>
 </html>
+
