@@ -702,10 +702,9 @@ async function submitForm() {
   };
 
   try {
-    await fetch('https://script.google.com/macros/s/AKfycbxtSJmO_YrfHQ5K8Hylto6MF4paMP1mgAijc2CmH5jeUvOWt1eGfpqHl4ok9zOU7buF/exec', {
+    await fetch('https://script.google.com/macros/s/AKfycbz-yzdbzGvu1HCmK-o9OJWNxAMRBOLH-Yge3qElLqUatP4nlWNy0snc4yp9qBcqsx-9/exec', {
       method: 'POST',
       mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
   } catch(e) { /* no-cors, expected */ }
