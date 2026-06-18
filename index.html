@@ -4,33 +4,33 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mati Figari — Identidad de Marca</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #faf7f2; --light: #f5f1eb; --border: #e8e3db;
-    --text: #3e3530; --text-secondary: #6b6560;
-    --accent: #8b7355; --accent-dark: #6b5b4e; --accent-light: #d4a574;
+    --bg: #f4faff; --light: #eaf4fb; --border: #cce4f0;
+    --text: #1a2a35; --text-secondary: #4a7a8a;
+    --accent: #237aa7; --accent-dark: #1a5a80; --accent-light: #56c264;
     --radius: 10px;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Roboto', sans-serif; background: var(--bg); color: var(--text); }
+  body { font-family: 'Ubuntu', sans-serif; background: var(--bg); color: var(--text); }
   #progress-bar-container { position: fixed; top: 0; left: 0; width: 100%; height: 5px; background: var(--border); z-index: 1000; }
-  #progress-bar { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-light)); width: 0%; transition: width 0.4s; }
-  header { background: linear-gradient(135deg, var(--accent-dark), var(--accent)); color: white; padding: 48px 24px 36px; text-align: center; }
+  #progress-bar { height: 100%; background: linear-gradient(90deg, #237aa7, #56c264); width: 0%; transition: width 0.4s; }
+  header { background: linear-gradient(135deg, #237aa7, #56c264); color: white; padding: 48px 24px 36px; text-align: center; }
   header h1 { font-weight: 700; font-size: 2rem; margin-bottom: 8px; }
   header p { font-size: 1rem; opacity: 0.85; }
   main { max-width: 760px; margin: 0 auto; padding: 32px 20px 80px; }
   .lang-box { background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 24px; margin-bottom: 28px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
   .lang-box label { font-weight: 500; }
-  .lang-box select { padding: 8px 14px; border: 1px solid var(--border); border-radius: 6px; font-family: 'Roboto', sans-serif; font-size: 0.9rem; background: var(--bg); cursor: pointer; }
-  .intro-box { background: white; border: 1px solid var(--border); border-left: 4px solid var(--accent-light); border-radius: var(--radius); padding: 24px 28px; margin-bottom: 28px; line-height: 1.75; color: var(--text-secondary); }
+  .lang-box select { padding: 8px 14px; border: 1px solid var(--border); border-radius: 6px; font-family: 'Ubuntu', sans-serif; font-size: 0.9rem; background: var(--bg); cursor: pointer; }
+  .intro-box { background: white; border: 1px solid var(--border); border-left: 4px solid #fa42e7; border-radius: var(--radius); padding: 24px 28px; margin-bottom: 28px; line-height: 1.75; color: var(--text-secondary); }
   .respondent-box { background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 24px 28px; margin-bottom: 28px; }
   .respondent-box h2 { font-weight: 500; font-size: 1.05rem; color: var(--accent-dark); margin-bottom: 20px; }
   .fields-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   @media(max-width:600px){ .fields-row { grid-template-columns: 1fr; } }
   .field-group { display: flex; flex-direction: column; gap: 6px; }
   .field-group label { font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); }
-  .field-group input, .field-group select { padding: 10px 14px; border: 1px solid var(--border); border-radius: 7px; font-family: 'Roboto', sans-serif; font-size: 0.95rem; background: var(--bg); transition: border-color 0.2s; }
+  .field-group input, .field-group select { padding: 10px 14px; border: 1px solid var(--border); border-radius: 7px; font-family: 'Ubuntu', sans-serif; font-size: 0.95rem; background: var(--bg); transition: border-color 0.2s; }
   .field-group input:focus, .field-group select:focus { outline: none; border-color: var(--accent); }
   .section-accordion { background: white; border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 16px; overflow: hidden; }
   .accordion-header { display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; cursor: pointer; user-select: none; transition: background 0.2s; }
@@ -43,22 +43,22 @@
   .question-block { margin-bottom: 28px; }
   .question-block:last-child { margin-bottom: 0; }
   .question-label { font-size: 0.95rem; font-weight: 500; color: var(--text); margin-bottom: 10px; line-height: 1.5; display: block; }
-  .q-num { font-size: 0.75rem; background: var(--accent-light); color: white; border-radius: 100px; padding: 2px 8px; margin-right: 8px; font-weight: 700; }
-  .custom-badge { font-size: 0.7rem; background: var(--accent); color: white; border-radius: 100px; padding: 2px 8px; margin-left: 8px; }
-  .important-badge { font-size: 0.7rem; background: #c0392b; color: white; border-radius: 100px; padding: 2px 8px; margin-left: 8px; }
-  textarea { width: 100%; padding: 12px 14px; border: 1px solid var(--border); border-radius: 7px; font-family: 'Roboto', sans-serif; font-size: 0.9rem; color: var(--text); background: var(--bg); resize: vertical; min-height: 90px; transition: border-color 0.2s; line-height: 1.6; }
+  .q-num { font-size: 0.75rem; background: #56c264; color: white; border-radius: 100px; padding: 2px 8px; margin-right: 8px; font-weight: 700; }
+  .custom-badge { font-size: 0.7rem; background: #237aa7; color: white; border-radius: 100px; padding: 2px 8px; margin-left: 8px; }
+  .important-badge { font-size: 0.7rem; background: #fa42e7; color: white; border-radius: 100px; padding: 2px 8px; margin-left: 8px; }
+  textarea { width: 100%; padding: 12px 14px; border: 1px solid var(--border); border-radius: 7px; font-family: 'Ubuntu', sans-serif; font-size: 0.9rem; color: var(--text); background: var(--bg); resize: vertical; min-height: 90px; transition: border-color 0.2s; line-height: 1.6; }
   textarea:focus { outline: none; border-color: var(--accent); }
   .audio-controls { display: flex; gap: 8px; margin-top: 8px; align-items: center; flex-wrap: wrap; }
-  .btn-record { padding: 7px 16px; border: none; border-radius: 6px; background: var(--accent); color: white; font-family: 'Roboto', sans-serif; font-size: 0.82rem; font-weight: 500; cursor: pointer; transition: background 0.2s; }
-  .btn-record:hover { background: var(--accent-dark); }
-  .btn-stop { padding: 7px 16px; border: none; border-radius: 6px; background: var(--border); color: var(--text-secondary); font-family: 'Roboto', sans-serif; font-size: 0.82rem; font-weight: 500; cursor: pointer; display: none; }
+  .btn-record { padding: 7px 16px; border: none; border-radius: 6px; background: #237aa7; color: white; font-family: 'Ubuntu', sans-serif; font-size: 0.82rem; font-weight: 500; cursor: pointer; transition: background 0.2s; }
+  .btn-record:hover { background: #1a5a80; }
+  .btn-stop { padding: 7px 16px; border: none; border-radius: 6px; background: var(--border); color: var(--text-secondary); font-family: 'Ubuntu', sans-serif; font-size: 0.82rem; font-weight: 500; cursor: pointer; display: none; }
   .rec-status { font-size: 0.78rem; color: var(--text-secondary); }
-  .dot-rec { width: 8px; height: 8px; border-radius: 50%; background: #c0392b; display: none; animation: blink 1s infinite; margin-right: 4px; vertical-align: middle; }
+  .dot-rec { width: 8px; height: 8px; border-radius: 50%; background: #fa42e7; display: none; animation: blink 1s infinite; margin-right: 4px; vertical-align: middle; }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
   .form-actions { display: flex; gap: 12px; margin-top: 36px; justify-content: center; flex-wrap: wrap; }
-  .btn-submit { padding: 14px 36px; border: none; border-radius: 8px; background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: white; font-family: 'Roboto', sans-serif; font-size: 1rem; font-weight: 500; cursor: pointer; box-shadow: 0 4px 14px rgba(139,115,85,0.3); transition: all 0.2s; }
+  .btn-submit { padding: 14px 36px; border: none; border-radius: 8px; background: linear-gradient(135deg, #237aa7, #56c264); color: white; font-family: 'Ubuntu', sans-serif; font-size: 1rem; font-weight: 500; cursor: pointer; box-shadow: 0 4px 14px rgba(139,115,85,0.3); transition: all 0.2s; }
   .btn-submit:hover { transform: translateY(-1px); }
-  .btn-reset { padding: 14px 36px; border: 1px solid var(--border); border-radius: 8px; background: var(--light); color: var(--text-secondary); font-family: 'Roboto', sans-serif; font-size: 1rem; cursor: pointer; }
+  .btn-reset { padding: 14px 36px; border: 1px solid var(--border); border-radius: 8px; background: var(--light); color: var(--text-secondary); font-family: 'Ubuntu', sans-serif; font-size: 1rem; cursor: pointer; }
   #success-page { display: none; max-width: 600px; margin: 80px auto; text-align: center; padding: 20px; }
   .success-icon { font-size: 4rem; margin-bottom: 20px; }
   #success-page h2 { font-size: 1.6rem; font-weight: 700; color: var(--accent-dark); margin-bottom: 12px; }
